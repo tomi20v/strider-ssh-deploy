@@ -1,6 +1,6 @@
 {
   "name": "strider-ssh-deploy",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Plugin for Strider-CD to deploy with SSH",
   "main": "webapp.js",
   "scripts": {

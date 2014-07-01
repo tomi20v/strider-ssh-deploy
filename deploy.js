@@ -21,7 +21,6 @@ var getConnectionOptions = function(config, callback) {
   })
 }
 
-
 module.exports = {
   configure: function(config, done) {
     return function(context, done) {
