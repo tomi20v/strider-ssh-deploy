@@ -27,7 +27,7 @@
     "lodash": "^2.4.1",
     "npmd-pack": "^1.0.0",
     "progress-stream": "^0.5.0",
-    "ssh2": "^0.2.25"
+    "ssh2": "^0.3.3"
   },
   "strider": {
     "type": "job",
