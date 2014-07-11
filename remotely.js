@@ -19,13 +19,16 @@ function runScript(conn, script, out, done) {
   conn.exec(script, function(err, stream) {
     if (err) throw err;
     stream
+    .on('exit', done)
     .on('close', function() {
       conn.end();
     })
     .on('data', function(data) {
       out(data.toString());
     })
-    .on('exit', done);
+    .stderr.on('data', function (data) {
+      out(data.toString());
+    });
   });
 }
 
