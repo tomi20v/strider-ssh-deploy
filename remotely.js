@@ -34,6 +34,7 @@ function runScript(conn, script, out, done) {
 
 module.exports = {
   deploy: function(out, projectName, localBundlePath, script, connectOptions, sftpProgress) {
+    var prefix = "Host "+connectOptions.host+" -- ";
     var paths = require('./remote_paths')(projectName);
     return new Promise(function(resolve, reject) {
       if (! connectOptions.username)
@@ -56,15 +57,14 @@ module.exports = {
         });
       }).on('error', function(err) {
         if ( /Authentication failure/.test(err.message) ) {
-          reject(new Error("Host "+connectOptions.host+" did not include your public key as an authorized key.\n"+require('./keys').whatIsMyPublicKey()));
-        } else 
-          reject(err);
+          reject(new Error(prefix+"Public key is not authorized.\n"+require('./keys').whatIsMyPublicKey()));
+        } else
+          reject(new Error(prefix+err.name+": "+err.message));
       }).on('close', function(hadError) {
-        console.log(hadError, exitCode);
         if (hadError)
-          reject(new Error("Remote connection had errors.")); // should have rejected already
+          reject(new Error(prefix+"Remote connection had errors.")); // should have rejected already
         else if (exitCode !== 0)
-          reject(new Error("Remote script exited non-zero "+exitCode));
+          reject(new Error(prefix+"Remote script exited non-zero "+exitCode));
         else
           resolve();
       }).connect(connectOptions);
