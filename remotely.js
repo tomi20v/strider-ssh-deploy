@@ -34,7 +34,7 @@ function runScript(conn, script, out, done) {
 
 module.exports = {
   deploy: function(out, projectName, localBundlePath, script, connectOptions, sftpProgress) {
-    var prefix = "Host "+connectOptions.host+" -- ";
+    var prefix = "Host "+connectOptions.host+":"+connectOptions.port+" -- ";
     var paths = require('./remote_paths')(projectName);
     return new Promise(function(resolve, reject) {
       if (! connectOptions.username)

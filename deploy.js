@@ -5,16 +5,19 @@ var keys = require('./keys');
 var bundler = require('./bundler');
 var remotely = require('./remotely')
 
+var parseHostString = require('./parse_host_string');
+
 var getConnectionOptions = function(config, callback) {
-  keys.getPrivateKey(config.privateKey, function(err, res) {
+  keys.getPrivateKey(config.privateKey, function(err, key) {
     if (err) return callback(err);
     else if (_.isArray(config.hosts) && config.hosts.length > 0) {
-      return callback(null, _.map(config.hosts, function(host) {
+      return callback(null, _.map(config.hosts, function(hostString) {
+        var parsed = parseHostString(hostString);
         return {
-          host: host,
-          port: 22,
+          host: parsed.host,
+          port: parsed.port,
           username: config.user,
-          privateKey: res
+          privateKey: key
         }
       }));
     } else callback(new Error("Must provide one or more hosts"));

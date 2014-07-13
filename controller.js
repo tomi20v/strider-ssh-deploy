@@ -1,4 +1,6 @@
-app.controller('SshDeployController', ['$scope', '$http', function ($scope, $http) {
+var parseHostString = require('./parse_host_string');
+
+module.exports = ['$scope', function ($scope) {
   var projectName = $scope.$parent.$parent.project.name;
   $scope.paths = require('./remote_paths')(projectName.replace('/','_'));
   $scope.$watch('configs[branch.name].ssh_deploy.config', function (value) {
@@ -17,8 +19,11 @@ app.controller('SshDeployController', ['$scope', '$http', function ($scope, $htt
   };
   $scope.addHost = function () {
     if (!$scope.config.hosts) $scope.config.hosts = [];
-    $scope.config.hosts.push($scope.new_host);
-    $scope.new_host = '';
-    $scope.save();
+    var host = parseHostString($scope.new_host);
+    if (host) {
+      $scope.config.hosts.push(host.string);
+      $scope.new_host = '';
+      $scope.save();
+    }
   };
-}]);
+}];
