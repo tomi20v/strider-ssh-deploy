@@ -46,7 +46,9 @@ module.exports = {
               done(0);
             }).catch(function(err) {
               done(err);
-            })
+            }).error(function (err) {
+              done(err);
+            });
           }
         })
       })
