@@ -33,7 +33,7 @@ function runScript(conn, script, out, done) {
 }
 
 module.exports = {
-  deploy: function(out, projectName, localBundlePath, script, connectOptions, sftpProgress) {
+  deploy: function(out, projectName, script, connectOptions, scp) {
     var prefix = "Host "+connectOptions.host+":"+connectOptions.port+" -- ";
     var paths = require('./remote_paths')(projectName);
     return new Promise(function(resolve, reject) {
@@ -42,19 +42,25 @@ module.exports = {
       var conn = new Connection();
       var exitCode = -1;
       conn.on('ready', function() {
-        conn.sftp(function (err, sftp) {
-          if (err) throw err;
-          var writeStream = sftp.createWriteStream(paths.bundle);
-          var str = progress({time:1000, length: fs.statSync(localBundlePath).size});
-          str.on('progress', sftpProgress)
-          fs.createReadStream(localBundlePath).pipe(str)
-          .pipe(writeStream)
-          .on('close', function() {
-            runScript(conn, prepare(paths).concat(script), out, function(_exitCode) {
-              exitCode = _exitCode;
-            });
-          })
-        });
+        if (scp) {
+          conn.sftp(function (err, sftp) {
+            if (err) throw err;
+            var writeStream = sftp.createWriteStream(paths.bundle);
+            var str = progress({time:1000, length: fs.statSync(scp.localBundlePath).size});
+            str.on('progress', scp.progress)
+            fs.createReadStream(scp.localBundlePath).pipe(str)
+            .pipe(writeStream)
+            .on('close', function() {
+              runScript(conn, prepare(paths).concat(script), out, function(_exitCode) {
+                exitCode = _exitCode;
+              });
+            })
+          });
+        } else {
+          runScript(conn, script, out, function(_exitCode) {
+            exitCode = _exitCode;
+          });
+        }
       }).on('error', function(err) {
         if ( /Authentication failure/.test(err.message) ) {
           reject(new Error(prefix+"Public key is not authorized.\n"+require('./keys').whatIsMyPublicKey()));
