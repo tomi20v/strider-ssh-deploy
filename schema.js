@@ -1,7 +1,7 @@
 module.exports = {
   scp: {
     type: Boolean,
-    default: null
+    default: false
   },
   user: {
     type: String,
