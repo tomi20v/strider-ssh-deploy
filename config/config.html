@@ -29,7 +29,7 @@
   <div class="span12">
     <label for="scp" class="pull-right">
       <big>Transfer bundle?</big>
-      <input type="checkbox" name="scp" ng-model="config.scp" class="pull-right" style="margin-left:5px;" />
+      <input type="checkbox" ng-change="save()" name="scp" ng-model="config.scp" class="pull-right" style="margin-left:5px;" />
     </label>
     <p class="help-text">
     <ul>
