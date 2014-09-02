@@ -63,7 +63,7 @@ module.exports = {
         }
       }).on('error', function(err) {
         if ( /Authentication failure/.test(err.message) ) {
-          reject(new Error(prefix+"Public key is not authorized.\n"+require('./keys').whatIsMyPublicKey()));
+          reject(new Error(prefix+"Public key is not authorized.\nCheck your key on the Branch tab."))
         } else
           reject(new Error(prefix+err.name+": "+err.message));
       }).on('close', function(hadError) {

@@ -32,7 +32,7 @@ describe("deploy", function() {
         ], user: "testUser" };
         context = {
           comment:sinon.stub(),
-          job: { project: { name: "foo" } }
+          job: { project: { name: "foo", branches: [] } }
         };
         sinon.stub(Connection.prototype, 'connect');
         deploy.configure(config)(context);

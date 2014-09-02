@@ -27,6 +27,7 @@ var getConnectionOptions = function(config, callback) {
 module.exports = {
   configure: function(config, done) {
     return function(context, done) {
+      keys.setContext(context);
       getConnectionOptions(config, function(err, hosts) {
         if (err) return done(err);
         var projectName = context.job.project.name.replace('/', '_');
