@@ -27,12 +27,16 @@
 <h3>Deploy</h3>
 <div class="row-fluid">
   <div class="span12">
+    <label for="scp" class="pull-right">
+      <big>Transfer bundle?</big>
+      <input type="checkbox" name="scp" ng-model="config.scp" class="pull-right" style="margin-left:5px;" />
+    </label>
     <p class="help-text">
     <ul>
-      <li>A tarball (sans node_modules/ and .git/) is transferred to <code>[[ paths.bundle ]]</code></li>
-      <li>If it exists, <code>[[ paths.old ]]</code> is deleted.</li>
-      <li>If it exists, <code>[[ paths.remote ]]</code> is renamed to <code>[[ paths.old ]]</code>.</li>
-      <li>The tarball is extracted into <code>[[ paths.remote ]]</code> for you automatically.</li>
+      <li ng-show="config.scp">A tarball (sans node_modules/ and .git/) is transferred to <code>[[ paths.bundle ]]</code></li>
+      <li ng-show="config.scp">If it exists, <code>[[ paths.old ]]</code> is deleted.</li>
+      <li ng-show="config.scp">If it exists, <code>[[ paths.remote ]]</code> is renamed to <code>[[ paths.old ]]</code>.</li>
+      <li ng-show="config.scp">The tarball is extracted into <code>[[ paths.remote ]]</code> for you automatically.</li>
       <li>Shell code below will execute from [[ config.user || "user" ]]'s <code>$HOME</code> directory.</li>
     </ul>
     </p>
