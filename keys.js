@@ -1,6 +1,9 @@
-var path = require('path'),
-home = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE,
-fs = require('fs');
+var path = require('path')
+  , home = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE
+  , fs = require('fs')
+  , _ = require('lodash')
+
+
 module.exports = {
   setContext: function(context) {
     this.branch = findBranch(context.job.project.branches, context.branch);
