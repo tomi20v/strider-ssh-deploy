@@ -29,10 +29,10 @@ describe("deploy", function() {
           'example.org',
           'example2.org:2022',
           '127.0.0.1:22'
-        ], user: "testUser" };
+        ], user: "testUser", script: "./deploy.sh <%= ref.branch %>"};
         context = {
           comment:sinon.stub(),
-          job: { project: { name: "foo", branches: [] } }
+          job: { project: { name: "foo", branches: [] }, ref: { branch: 'master' } }
         };
         sinon.stub(Connection.prototype, 'connect');
         deploy.configure(config)(context);

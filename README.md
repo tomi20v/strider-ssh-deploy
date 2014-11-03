@@ -9,13 +9,22 @@ cd into strider deployment and run `npm install strider-ssh-deploy`
 
 restart strider and check out the web ui -- you'll see a new plugin
 
-configure the plugin with the deployment username, one or more hosts, and shell script to run on the hosts
-
 please provide feedback in the issues and/or in IRC
 
 thanks!
 
 ![screenshot][screenshot1]
+
+### usage
+
+configure the plugin with the deployment username, one or more hosts, and shell script to run on the hosts.
+
+In the shell script input field you can use metadata information from the job document. For example to set environment variables on the remote server or hand over information to a script.
+
+`./deploy.sh <%= ref.branch %>`
+
+Have a look at the metadata plugin for all fields of the job document.
+
 
 
 [dev-dep-img]: https://david-dm.org/Strider-CD/strider-ssh-deploy/dev-status.svg

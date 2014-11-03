@@ -37,6 +37,7 @@
       <li ng-show="config.scp">If it exists, <code>[[ paths.old ]]</code> is deleted.</li>
       <li ng-show="config.scp">If it exists, <code>[[ paths.remote ]]</code> is renamed to <code>[[ paths.old ]]</code>.</li>
       <li ng-show="config.scp">The tarball is extracted into <code>[[ paths.remote ]]</code> for you automatically.</li>
+      <li>Add dynamic information by using the ejs syntax: <code><%= ref.branch %></code></li>
       <li>Shell code below will execute from [[ config.user || "user" ]]'s <code>$HOME</code> directory.</li>
     </ul>
     </p>
