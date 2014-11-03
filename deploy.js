@@ -1,5 +1,6 @@
 var Promise = require('bluebird');
 var fs = require('fs');
+var ejs = require('ejs');
 var _ = require('lodash');
 var keys = require('./keys');
 var bundler = require('./bundler');
@@ -24,6 +25,13 @@ var getConnectionOptions = function(config, callback) {
   })
 }
 
+var compileScript = function(job, shellScript) {
+  var compiled = ejs.compile(shellScript,'utf-8');
+  var compiledScript = compiled(job);
+
+  return compiledScript;
+}
+
 module.exports = {
   configure: function(config, done) {
     return function(context, done) {
@@ -31,12 +39,12 @@ module.exports = {
       getConnectionOptions(config, function(err, hosts) {
         if (err) return done(err);
         var projectName = context.job.project.name.replace('/', '_');
-
+        var shellScript = compileScript(context.job, config.script);
 
         function proceed(scp) {
           var promises = _.map(hosts, function(sshOpts) {
             return remotely.deploy(
-              context.out, projectName, config.script, sshOpts, scp
+              context.out, projectName, shellScript, sshOpts, scp
             )
           });
           Promise.all(promises).then(function() {
