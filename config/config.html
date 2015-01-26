@@ -12,7 +12,7 @@
 </p>
 <ul class="hosts unstyled">
   <li ng-repeat="item in config.hosts">
-    <i class="icon-remove" ng-click="removeHost($index)"></i>
+    <i class="fa fa-remove" ng-click="removeHost($index)"></i>
     [[ item ]]
   </li>
   <li ng-hide="config.hosts.length">You must add at least one host in order to deploy!</li>
