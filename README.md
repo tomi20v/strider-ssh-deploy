@@ -23,7 +23,7 @@ In the shell script input field you can use metadata information from the job do
 
 `./deploy.sh <%= ref.branch %>`
 
-Have a look at the metadata plugin for all fields of the job document.
+Have a look at the [metadata plugin](https://github.com/Strider-CD/strider-metadata) for all fields of the job document.
 
 
 
