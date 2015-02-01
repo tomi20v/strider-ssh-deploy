@@ -4,6 +4,6 @@ module.exports = function(name) {
     name: name,
     remote: remote,
     old: remote+'.old',
-    bundle: "/tmp/package.tar.gz",
+    bundle: "/tmp/package-"+require('crypto').randomBytes(16).toString('hex')+".tar.gz",
   }
 }
