@@ -25,6 +25,11 @@ In the shell script input field you can use metadata information from the job do
 
 Have a look at the [metadata plugin](https://github.com/Strider-CD/strider-metadata) for all fields of the job document.
 
+**Note on _Transfer bundle?_ flag**
+
+Currently, "bundling" is provided by npmd-pack which turns a directory into a tarball for npm, this happens to work pretty nicely for any project, not just node.js projects. Anyway it is npmd-pack that is respecting the .gitignore file. You can see it being used in bundler.js line 12.
+
+Simply remember that with _Transfer bundle?_ flag enable al files and folder listed in your `.gitignore` **will not be transfered**. Check (this)[https://github.com/Strider-CD/strider-ssh-deploy/issues/17] issue for more information.
 
 
 [dev-dep-img]: https://david-dm.org/Strider-CD/strider-ssh-deploy/dev-status.svg
