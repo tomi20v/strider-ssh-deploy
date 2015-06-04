@@ -1,12 +1,11 @@
-var Promise = require('bluebird');
-var fs = require('fs');
-var ejs = require('ejs');
 var _ = require('lodash');
-var keys = require('./keys');
 var bundler = require('./bundler');
-var remotely = require('./remotely')
-
+var ejs = require('ejs');
+var keys = require('./keys');
 var parseHostString = require('./parse_host_string');
+var Promise = require('bluebird');
+var remotely = require('./remotely');
+var utils = require('./utils');
 
 var getConnectionOptions = function(config, callback) {
   keys.getPrivateKey(config.privateKey, function(err, key) {
@@ -23,6 +22,16 @@ var getConnectionOptions = function(config, callback) {
       }));
     } else callback(new Error("Must provide one or more hosts"));
   })
+};
+
+/**
+ * Given a job context, determines which hosts to deploy to.
+ * @param {Object} context The job context.
+ * @returns {Array<String>|Array} An array of host strings.
+ */
+function getHosts(context){
+  var master = utils.getMasterBranch(context.job.project.branches);
+  return master ? master.hosts : [];
 }
 
 var compileScript = function(job, shellScript) {
@@ -30,12 +39,16 @@ var compileScript = function(job, shellScript) {
   var compiledScript = compiled(job);
 
   return compiledScript;
-}
+};
 
 module.exports = {
   configure: function(config, done) {
     return function(context, done) {
       keys.setContext(context);
+
+      // Determine which hosts to deploy to.
+      config.hosts = config.hosts || getHosts(context);
+
       getConnectionOptions(config, function(err, hosts) {
         if (err) return done(err);
         var projectName = context.job.project.name.replace('/', '_');
