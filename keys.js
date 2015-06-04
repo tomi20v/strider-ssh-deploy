@@ -7,7 +7,8 @@ var path = require('path')
 module.exports = {
   setContext: function(context) {
     this.branch = findBranch(context.job.project.branches, context.branch);
-    this.branch.privkey = getMasterPrivKey(context.job.project.branches);
+    // If no private key is set on this branch, use the key from master.
+    this.branch.privkey = this.branch.privkey || getMasterPrivKey(context.job.project.branches);
   },
   whatIsMyPublicKey: function() {
     var pubKey = this.branch.pubkey
