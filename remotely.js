@@ -1,5 +1,5 @@
 var fs = require('fs');
-var Connection = require('ssh2');
+var Client = require('ssh2').Client;
 var Promise = require('bluebird');
 var progress = require('progress-stream');
 var bundler = require('./bundler');
@@ -34,12 +34,12 @@ function runScript(conn, script, out, done) {
 
 module.exports = {
   deploy: function(out, projectName, script, connectOptions, scp) {
-    var prefix = "Host "+connectOptions.host+":"+connectOptions.port+" -- ";
+    var prefix = 'Host '+connectOptions.host+':'+connectOptions.port+' -- ';
     var paths = require('./remote_paths')(projectName);
     return new Promise(function(resolve, reject) {
       if (! connectOptions.username)
-        return reject(new Error("Please set a user in the config!"));
-      var conn = new Connection();
+        return reject(new Error('Please set a user in the config!'));
+      var conn = new Client();
       var exitCode = -1;
       conn.on('ready', function() {
         if (scp) {
@@ -47,7 +47,7 @@ module.exports = {
             if (err) throw err;
             var writeStream = sftp.createWriteStream(paths.bundle);
             var str = progress({time:1000, length: fs.statSync(scp.localBundlePath).size});
-            str.on('progress', scp.progress)
+            str.on('progress', scp.progress);
             fs.createReadStream(scp.localBundlePath).pipe(str)
             .pipe(writeStream)
             .on('close', function() {
@@ -63,17 +63,17 @@ module.exports = {
         }
       }).on('error', function(err) {
         if ( /Authentication failure/.test(err.message) ) {
-          reject(new Error(prefix+"Public key is not authorized.\nCheck your key on the Branch tab."))
+          reject(new Error(prefix+'Public key is not authorized.\nCheck your key on the Branch tab.'))
         } else
-          reject(new Error(prefix+err.name+": "+err.message));
+          reject(new Error(prefix+err.name+': '+err.message));
       }).on('close', function(hadError) {
         if (hadError)
-          reject(new Error(prefix+"Remote connection had errors.")); // should have rejected already
+          reject(new Error(prefix+'Remote connection had errors.')); // should have rejected already
         else if (exitCode !== 0)
-          reject(new Error(prefix+"Remote script exited non-zero "+exitCode));
+          reject(new Error(prefix+'Remote script exited non-zero '+exitCode));
         else
           resolve();
       }).connect(connectOptions);
     })
   }
-}
+};
