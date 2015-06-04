@@ -7,6 +7,7 @@ var path = require('path')
 module.exports = {
   setContext: function(context) {
     this.branch = findBranch(context.job.project.branches, context.branch);
+    this.branch.privkey = getMasterPrivKey(context.job.project.branches);
   },
   whatIsMyPublicKey: function() {
     var pubKey = this.branch.pubkey
@@ -41,4 +42,12 @@ function findBranch(branches, name) {
     }
     return branch;
   }(name, foundBranch, branches))
+}
+
+function getMasterPrivKey(branches) {
+  for (var i=0; i<branches.length; i++) {
+    if (branches[i].name === 'master') {
+      return branches[i].privkey
+    }
+  }
 }
