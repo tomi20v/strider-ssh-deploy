@@ -27,9 +27,11 @@ Have a look at the [metadata plugin](https://github.com/Strider-CD/strider-metad
 
 **Note on _Transfer bundle?_ flag**
 
-Currently, "bundling" is provided by npmd-pack which turns a directory into a tarball for npm, this happens to work pretty nicely for any project, not just node.js projects. Anyway it is npmd-pack that is respecting the .gitignore file. You can see it being used in bundler.js line 12.
+Currently, "bundling" is provided by npm-pack which turns a directory into a tarball for npm, this happens to work pretty nicely for any project, not just node.js projects. Anyway it is npm-pack that is respecting the `.npmignore` file. *Additionally* and **most importantly**, if no `.npmignore` file is found, the `.gitignore` file is used!
 
 Simply remember that with _Transfer bundle?_ flag enable all files and folder listed in your `.gitignore` **will not be transfered**. Check [this](https://github.com/Strider-CD/strider-ssh-deploy/issues/17) issue for more information.
+
+If you want to work around this issue, create an empty `.npmignore` file in your project.
 
 
 [dev-dep-img]: https://david-dm.org/Strider-CD/strider-ssh-deploy/dev-status.svg
