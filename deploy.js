@@ -13,6 +13,9 @@ var getConnectionOptions = function(config, callback) {
     else if (_.isArray(config.hosts) && config.hosts.length > 0) {
       return callback(null, _.map(config.hosts, function(hostString) {
         var parsed = parseHostString(hostString);
+        if(!parsed) {
+          return callback(new Error("The host string could not be parsed. Make sure to provide the host in the format user@hostname:port"))
+        }
         return {
           host: parsed.host,
           port: parsed.port,

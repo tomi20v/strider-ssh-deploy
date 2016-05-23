@@ -6,14 +6,11 @@ chai.use(require("sinon-chai"));
 describe("host string parsing", function(){
   var parseHostString = require("../parse_host_string");
 
-  it("host", function() {
-    var result = parseHostString("host");
-    expect(result).to.have.property("host");
-    expect(result.host).to.equal("host");
-  });
+  it("user@host:port", function() {
+    var result = parseHostString("user@host:1234");
+    expect(result).to.have.property("user");
+    expect(result.user).to.equal("user");
 
-  it("host:port", function() {
-    var result = parseHostString("host:1234");
     expect(result).to.have.property("host");
     expect(result.host).to.equal("host");
 
