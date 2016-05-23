@@ -1,0 +1,23 @@
+var sinon = require("sinon");
+var chai = require("chai");
+var expect = chai.expect;
+chai.use(require("sinon-chai"));
+
+describe("host string parsing", function(){
+  var parseHostString = require("../parse_host_string");
+
+  it("host", function() {
+    var result = parseHostString("host");
+    expect(result).to.have.property("host");
+    expect(result.host).to.equal("host");
+  });
+
+  it("host:port", function() {
+    var result = parseHostString("host:1234");
+    expect(result).to.have.property("host");
+    expect(result.host).to.equal("host");
+
+    expect(result).to.have.property("port");
+    expect(result.port).to.equal(1234);
+  });
+});
