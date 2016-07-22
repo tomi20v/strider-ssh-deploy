@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
-  config: require('./schema')
+  config: require('./lib/schema')
 };

@@ -4,9 +4,9 @@
   "description": "Plugin for Strider-CD to deploy with SSH",
   "main": "webapp.js",
   "scripts": {
-    "test": "mocha -R spec --recursive test",
+    "test": "npm run lint && mocha -R spec --recursive test",
     "tdd": "mocha -w -R spec --recursive test",
-    "lint": "eslint *.js",
+    "lint": "eslint *.js lib",
     "build": "browserify config/config.node.js -o config/config.js",
     "watch": "watchify config/config.node.js -o config/config.js",
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha --recursive test"

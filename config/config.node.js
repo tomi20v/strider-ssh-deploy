@@ -1,1 +1,1 @@
-app.controller('SshDeployController', require('../controller'));
+app.controller('SshDeployController', require('./controller'));

@@ -1,3 +1,5 @@
+'use strict';
+
 var parseHostString = require('../lib/parse_host_string');
 
 module.exports = ['$scope', function ($scope) {
