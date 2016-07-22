@@ -10,7 +10,8 @@ var spawn = require('child_process').spawn;
 var rimraf = require('rimraf');
 
 describe('bundler', function () {
-  var err = null, res = null;
+  var err = null;
+  var res = null;
   var projName = 'example_project-name';
   var tarballName = projName + '.tar.gz';
   var extractDir = '/tmp/' + projName;
