@@ -35,7 +35,8 @@ describe('deploy', function () {
         };
         context = {
           comment: sinon.stub(),
-          job: {project: {name: 'foo', branches: []}, ref: {branch: 'master'}}
+          job: {project: {name: 'foo', branches: [{name: 'master'}]}, ref: {branch: 'master'}},
+          branch: 'master'
         };
         sinon.stub(Client.prototype, 'connect');
         deploy.configure(config)(context);
