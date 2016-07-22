@@ -7,7 +7,7 @@ module.exports = function (str) {
   if (parts1.length != 2){
     return null;
   }
-  var hostString = "";
+  var hostString = '';
   if (parts1.length == 2){
     user = parts1[0];
     hostString = parts1[1];
@@ -33,5 +33,5 @@ module.exports = function (str) {
     user: user,
     host: host,
     port: port
-  }
+  };
 };

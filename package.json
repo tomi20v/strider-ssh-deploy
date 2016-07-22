@@ -6,6 +6,7 @@
   "scripts": {
     "test": "mocha -R spec --recursive test",
     "tdd": "mocha -w -R spec --recursive test",
+    "lint": "eslint *.js",
     "build": "browserify config/config.node.js -o config/config.js",
     "watch": "watchify config/config.node.js -o config/config.js",
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha --recursive test"
@@ -20,8 +21,11 @@
     "deploy",
     "plugin"
   ],
+  "engines": {
+    "node": ">=4.2"
+  },
   "author": "Keyvan Fatehi <keyvanfatehi@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "bluebird": "^3.4.0",
     "ejs": "^2.4.1",
@@ -44,6 +48,7 @@
   "devDependencies": {
     "browserify": "^13.0.1",
     "chai": "^3.5.0",
+    "eslint": "^3.1.1",
     "mocha": "^2.5.1",
     "rimraf": "^2.2.8",
     "sinon": "^1.17.4",

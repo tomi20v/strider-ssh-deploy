@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
 module.exports = {
-  getMasterBranch : getMasterBranch
+  getMasterBranch: getMasterBranch
 };
 
 /**
@@ -10,7 +10,7 @@ module.exports = {
  * @returns {Object|null} The configuration for the master branch, or null if the master branch doesn't exist.
  */
 function getMasterBranch(branches) {
-  return _.find(branches, function(branch) {
+  return _.find(branches, function (branch) {
     return branch.name === 'master';
   });
 }

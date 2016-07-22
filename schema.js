@@ -15,4 +15,4 @@ module.exports = {
     type: String,
     default: '# shell script to run on the remote host(s)'
   }
-}
+};
