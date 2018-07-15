@@ -1,20 +1,24 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+'use strict';
+
 app.controller('SshDeployController', require('./controller'));
 
 },{"./controller":2}],2:[function(require,module,exports){
+'use strict';
+
 var parseHostString = require('../lib/parse_host_string');
 
 module.exports = ['$scope', function ($scope) {
   var projectName = $scope.$parent.$parent.project.name;
   $scope.paths = require('../lib/remote_paths')(projectName.replace('/', '_'));
-  $scope.$watch('configs[branch.name].ssh_deploy.config', function (value) {
+  $scope.$watch('configs[branch.name].ssh_deploy_custom.config', function (value) {
     $scope.config = value;
   });
 
   $scope.saving = false;
   $scope.save = function () {
     $scope.saving = true;
-    $scope.pluginConfig('ssh_deploy', $scope.config, function () {
+    $scope.pluginConfig('ssh_deploy_custom', $scope.config, function () {
       $scope.saving = false;
     });
   };
@@ -36,6 +40,8 @@ module.exports = ['$scope', function ($scope) {
 }];
 
 },{"../lib/parse_host_string":3,"../lib/remote_paths":4}],3:[function(require,module,exports){
+'use strict';
+
 module.exports = function (str) {
   var min = 1;
   var max = 65535;
@@ -67,7 +73,7 @@ module.exports = function (str) {
     port = 22;
   }
   return {
-    string: user+'@'+host+':'+port,
+    string: `${user}@${host}:${port}`,
     user: user,
     host: host,
     port: port
@@ -78,14 +84,14 @@ module.exports = function (str) {
 'use strict';
 
 module.exports = function (name) {
-  var remote = '$HOME/' + name;
+  var remote = `$HOME/${name}`;
   var randomId = Math.random().toString(36).substring(7);
 
   return {
     name: name,
     remote: remote,
-    old: remote + '.old',
-    bundle: '/tmp/package-' + randomId + '.tar.gz'
+    old: `${remote}.old`,
+    bundle: `/tmp/package-${randomId}.tar.gz`
   };
 };
 

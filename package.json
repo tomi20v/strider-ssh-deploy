@@ -1,7 +1,7 @@
 {
-  "name": "strider-ssh-deploy",
-  "version": "1.0.2",
-  "description": "Plugin for Strider-CD to deploy with SSH",
+  "name": "strider-ssh-deploy-custom",
+  "version": "0.0.1",
+  "description": "Tweaked plugin for Strider-CD to deploy with SSH",
   "main": "webapp.js",
   "scripts": {
     "test": "npm run lint && mocha -R spec --recursive test",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Strider-CD/strider-ssh-deploy.git"
+    "url": "https://github.com/tomi20v/strider-ssh-deploy-custom.git"
   },
   "keywords": [
     "strider",
@@ -24,8 +24,9 @@
   "engines": {
     "node": ">=4.2"
   },
-  "author": "Keyvan Fatehi <keyvanfatehi@gmail.com>",
+  "author": "tomi20v <tomi20v@gmail.com>",
   "license": "MIT",
+  "private": true,
   "dependencies": {
     "bluebird": "^3.4.0",
     "ejs": "^2.4.1",
@@ -36,8 +37,8 @@
   },
   "strider": {
     "type": "job",
-    "id": "ssh_deploy",
-    "title": "SSH Deploy",
+    "id": "ssh_deploy_custom",
+    "title": "SSH Deploy custom",
     "worker": "worker.js",
     "webapp": "webapp.js",
     "icon": "icon.png",

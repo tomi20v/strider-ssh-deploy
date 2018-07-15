@@ -5,14 +5,14 @@ var parseHostString = require('../lib/parse_host_string');
 module.exports = ['$scope', function ($scope) {
   var projectName = $scope.$parent.$parent.project.name;
   $scope.paths = require('../lib/remote_paths')(projectName.replace('/', '_'));
-  $scope.$watch('configs[branch.name].ssh_deploy.config', function (value) {
+  $scope.$watch('configs[branch.name].ssh_deploy_custom.config', function (value) {
     $scope.config = value;
   });
 
   $scope.saving = false;
   $scope.save = function () {
     $scope.saving = true;
-    $scope.pluginConfig('ssh_deploy', $scope.config, function () {
+    $scope.pluginConfig('ssh_deploy_custom', $scope.config, function () {
       $scope.saving = false;
     });
   };
